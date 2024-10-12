@@ -1,7 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"delivery-microservice-goods/backend/config"
+	"delivery-microservice-goods/backend/internal/app"
+	"log"
+)
 
 func main() {
-	fmt.Println("Hello World")
+	// Configuration
+	cfg, err := config.NewConfig()
+	if err != nil {
+		log.Fatalf("Config error: %s", err)
+	}
+
+	// Run
+	app.Run(cfg)
 }
