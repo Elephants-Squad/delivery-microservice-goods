@@ -5,8 +5,8 @@ import "flag"
 type (
 	Config struct {
 		HTTP
-		Log
 		DB
+		LOG_LEVEL
 	}
 
 	HTTP struct {
@@ -16,11 +16,16 @@ type (
 	DB struct {
 		URL string
 	}
+
+	LOG_LEVEL struct {
+		Level string
+	}
 )
 
 func NewConfig() (*Config, error) {
 	port := flag.String("port", "localhost:8080", "port")
 	dbURL := flag.String("db_url", "", "url for connection to database")
+	logLevel := flag.String("log_level", "info", "log level")
 
 	flag.Parse()
 
@@ -30,6 +35,9 @@ func NewConfig() (*Config, error) {
 		},
 		DB: DB{
 			URL: *dbURL,
+		},
+		LOG_LEVEL: LOG_LEVEL{
+			Level: *logLevel,
 		},
 	}
 
