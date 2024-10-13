@@ -1,43 +1,41 @@
 package config
 
-import "flag"
-
-type (
-	Config struct {
-		HTTP
-		DB
-		LOG_LEVEL
-	}
-
-	HTTP struct {
-		Port string
-	}
-
-	DB struct {
-		URL string
-	}
-
-	LOG_LEVEL struct {
-		Level string
-	}
+import (
+	"flag"
 )
 
-func NewConfig() (*Config, error) {
-	port := flag.String("port", "localhost:8080", "port")
-	dbURL := flag.String("db_url", "", "url for connection to database")
-	logLevel := flag.String("log_level", "info", "log level")
+type Config struct {
+	HTTP
+	//Log
+	DB
+}
 
-	flag.Parse()
+type HTTP struct {
+	Port string
+}
+
+//type Log struct {
+//	logLevel string
+//}
+
+type DB struct {
+	URL string
+}
+
+func New() (*Config, error) {
+	port := flag.String("port", ":8080", "http port")
+	//logLevel := flag.String("log-level", "local", "log level")
+	dbURL := flag.String("db-url", "", "http url")
 
 	cfg := &Config{
 		HTTP: HTTP{
-			Port: *port,
+			*port,
 		},
+		//Log: Log{
+		//	*logLevel,
+		//},
 		DB: DB{
-			URL: *dbURL,
-		},
-		LOG_LEVEL: LOG_LEVEL{
-			Level: *logLevel,
+			*dbURL,
 		},
 	}
 
