@@ -24,6 +24,8 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     container_name: backend_goods
+    volumes:
+      - ./backend/internal/data:/app/internal/data
     restart: always
     ports:
       - "8080:8080"
@@ -33,6 +35,7 @@ services:
       postgres:
         condition: service_healthy
     command: "./backend/main -db_url postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB} -log_level ${LOG_LEVEL} -port ${PORT}"
+
 
 volumes:
   postgres_data:
